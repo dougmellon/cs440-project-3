@@ -118,6 +118,8 @@ public class Main {
         });
 
         // fcfs
+        System.out.println("\nFCFS:");
+
         processes.sort(Comparator.comparing(Process::getArrivalTime));
 
         processes.forEach(process -> {
