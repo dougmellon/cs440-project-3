@@ -116,7 +116,7 @@ public class Main {
                     process.getBurstTime());
         });
 
-        // fcfs
+        // ----------------- fcfs -----------------
 
         processes.sort(Comparator.comparing(Process::getArrivalTime));
 
@@ -134,20 +134,31 @@ public class Main {
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
 
-        // sjf
+        // ----------------- sjf -----------------
         clock = 0;
         contextSwitch = 1;
 
         System.out.println("\nSJF:");
 
-        processes.sort(Comparator.comparing(Process::getBurstTime));
+        List<Process> sjfProcesses =  processes;
 
-        for (int i = 0; i < processes.size(); i++) {
-            System.out.println("@t=" + clock + ", " + processes.get(i).toString());
+        // print out the first process then remove it
+        sjfProcesses.sort(Comparator.comparing(Process::getArrivalTime));
+        System.out.println("@t=" + clock + ", " + processes.get(0).toString());
+        clock += processes.get(0).getBurstTime();
+        System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+        clock += 2;
+        sjfProcesses.remove(0);
 
-            clock += processes.get(i).getBurstTime();
+        // sort the rest by their burst time
+        sjfProcesses.sort(Comparator.comparing(Process::getBurstTime));
 
-            if (i + 1 != processes.size()) {
+        for (int i = 0; i <sjfProcesses.size(); i++) {
+            System.out.println("@t=" + clock + ", " + sjfProcesses.get(i).toString());
+
+            clock += sjfProcesses.get(i).getBurstTime();
+
+            if (i + 1 != sjfProcesses.size()) {
                 System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
                 clock += 2;
             }
