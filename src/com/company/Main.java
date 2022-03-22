@@ -123,12 +123,12 @@ public class Main {
 
         processes.sort(Comparator.comparing(Process::getArrivalTime));
 
-        processes.forEach(process -> {
-            System.out.println("@t=" + clock + ", " + process.toString());
-            System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-            clock += latency;
-            contextSwitch++;
-        });
+        for (int i = 0; i < processes.size(); i++) {
+            System.out.println("@t=" + clock + ", " + processes.get(i).toString());
 
+            if (i + 1 != processes.size()) {
+                System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+            }
+        }
     }
 }
