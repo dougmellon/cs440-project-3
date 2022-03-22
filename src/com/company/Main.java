@@ -11,6 +11,7 @@ public class Main {
     static int quantum;
     static int latency;
     static int clock = 0;
+    static int contextSwitch = 1;
 
     // static HashMap<Integer, Process> processes = new HashMap<>();
 
@@ -124,7 +125,9 @@ public class Main {
 
         processes.forEach(process -> {
             System.out.println("@t=" + clock + ", " + process.toString());
-            clock++;
+            System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+            clock += latency;
+            contextSwitch++;
         });
 
     }
