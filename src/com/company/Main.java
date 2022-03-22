@@ -8,14 +8,12 @@ public class Main {
 
     static long seed;
     static int numProcesses;
-    static int arrivalTime;
+    static int maxArrivalTime;
     static int maxBurstTime;
     static int quantum;
     static int latency;
 
     static HashMap<Integer, Process> processes = new HashMap<>();
-
-    static Random randNum;
 
     public static void main(String[] args) {
 
@@ -26,28 +24,28 @@ public class Main {
         seed = scanner.nextLong();
 
         // take in the number of processes
-        System.out.print("Enter number of processes (2, 100): ");
+        System.out.print("Enter number of processes (2, 10): ");
         do {
             numProcesses = scanner.nextInt();
 
-            if (numProcesses < 2 || numProcesses > 100) {
-                System.out.println("--- Error: Enter a valid number between 2 and 100 (inclusive)");
-                System.out.print("Enter number of processes (2, 100): ");
+            if (numProcesses < 2 || numProcesses > 10) {
+                System.out.println("--- Error: Enter a valid number between 2 and 10 (inclusive)");
+                System.out.print("Enter number of processes (2, 10): ");
             }
 
-        } while (numProcesses < 2 || numProcesses > 100);
+        } while (numProcesses < 2 || numProcesses > 10);
 
         // take in the arrival time
         System.out.print("Enter last possible arrival time (0, 99): ");
         do {
-            arrivalTime = scanner.nextInt();
+            maxArrivalTime = scanner.nextInt();
 
-            if (arrivalTime < 0 || arrivalTime > 99) {
+            if (maxArrivalTime < 0 || maxArrivalTime > 99) {
                 System.out.println("--- Error: Enter a valid number between 0 and 99 (inclusive)");
                 System.out.print("Enter last possible arrival time (0, 99): ");
             }
 
-        } while (arrivalTime < 0 || arrivalTime > 99);
+        } while (maxArrivalTime < 0 || maxArrivalTime > 99);
 
         // take in the max burst time
         System.out.print("Enter max burst time (1, 100): ");
@@ -86,15 +84,18 @@ public class Main {
         } while (latency < 1 || latency > 10);
 
         // create processes and add them to a hashmap
-        for (int i = 0; i < numProcesses; i++) {
-            randNum = new Random();
-            randNum.setSeed(seed); // get random value with randNum.nextInt();
+        for (int i = 1; i < numProcesses + 1; i++) {
+
+            Random randNum = new Random();
+
+            int arrivalTime = randNum.nextInt(maxArrivalTime - 1) + 1;
+            int burstTime = randNum.nextInt(maxBurstTime - 1) + 1;
 
 
             Process process = new Process(
                     numProcesses,
                     arrivalTime,
-                    maxBurstTime,
+                    burstTime,
                     quantum,
                     latency
             );
@@ -108,7 +109,11 @@ public class Main {
         System.out.printf("\n%-5s %-10s %s%n", "P", "Arrival", "Burst");
 
         processes.forEach((key, value) -> {
-            System.out.println();
+            System.out.printf("%-5s %-10s %s%n",
+                    key,
+                    value.getArrivalTime(),
+                    value.getburstTime()
+                    );
         });
 
     }

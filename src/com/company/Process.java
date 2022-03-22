@@ -4,16 +4,16 @@ public class Process {
 
     int numProcesses;
     int arrivalTime;
-    int maxBurstTime;
+    int burstTime;
     int quantum;
     int latency;
 
     public Process() {}
 
-    public Process(int numProcesses, int arrivalTime, int maxBurstTime, int quantum, int latency) {
+    public Process(int numProcesses, int arrivalTime, int burstTime, int quantum, int latency) {
         this.numProcesses = numProcesses;
         this.arrivalTime = arrivalTime;
-        this.maxBurstTime = maxBurstTime;
+        this.burstTime = burstTime;
         this.quantum = quantum;
         this.latency = latency;
     }
@@ -34,12 +34,12 @@ public class Process {
         this.arrivalTime = arrivalTime;
     }
 
-    public int getMaxBurstTime() {
-        return maxBurstTime;
+    public int getburstTime() {
+        return burstTime;
     }
 
-    public void setMaxBurstTime(int maxBurstTime) {
-        this.maxBurstTime = maxBurstTime;
+    public void setburstTime(int burstTime) {
+        this.burstTime = burstTime;
     }
 
     public int getQuantum() {
