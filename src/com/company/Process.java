@@ -2,20 +2,28 @@ package com.company;
 
 public class Process {
 
+    int id;
     int numProcesses;
     int arrivalTime;
     int burstTime;
     int quantum;
-    int latency;
 
     public Process() {}
 
-    public Process(int numProcesses, int arrivalTime, int burstTime, int quantum, int latency) {
+    public Process(int id, int numProcesses, int arrivalTime, int burstTime, int quantum) {
+        this.id = id;
         this.numProcesses = numProcesses;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.quantum = quantum;
-        this.latency = latency;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumProcesses() {
@@ -34,11 +42,11 @@ public class Process {
         this.arrivalTime = arrivalTime;
     }
 
-    public int getburstTime() {
+    public int getBurstTime() {
         return burstTime;
     }
 
-    public void setburstTime(int burstTime) {
+    public void setBurstTime(int burstTime) {
         this.burstTime = burstTime;
     }
 
@@ -50,11 +58,8 @@ public class Process {
         this.quantum = quantum;
     }
 
-    public int getLatency() {
-        return latency;
-    }
 
-    public void setLatency(int latency) {
-        this.latency = latency;
+    public String toString() {
+        return "P" + this.id + " selected for " + this.burstTime + " units";
     }
 }

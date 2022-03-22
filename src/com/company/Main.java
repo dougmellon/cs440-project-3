@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
 
@@ -12,8 +10,11 @@ public class Main {
     static int maxBurstTime;
     static int quantum;
     static int latency;
+    static int clock = 0;
 
-    static HashMap<Integer, Process> processes = new HashMap<>();
+    // static HashMap<Integer, Process> processes = new HashMap<>();
+
+    static List<Process> processes = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -93,14 +94,14 @@ public class Main {
 
 
             Process process = new Process(
+                    i,
                     numProcesses,
                     arrivalTime,
                     burstTime,
-                    quantum,
-                    latency
+                    quantum
             );
 
-            processes.put(i, process);
+            processes.add(process);
 
         }
 
@@ -108,12 +109,20 @@ public class Main {
         System.out.printf("\n%s Processes created.", processes.size());
         System.out.printf("\n%-5s %-10s %s%n", "P", "Arrival", "Burst");
 
-        processes.forEach((key, value) -> {
+
+        processes.forEach(process -> {
             System.out.printf("%-5s %-10s %s%n",
-                    key,
-                    value.getArrivalTime(),
-                    value.getburstTime()
-                    );
+                    process.getId(),
+                    process.getArrivalTime(),
+                    process.getBurstTime());
+        });
+
+        // fcfs
+        processes.sort(Comparator.comparing(Process::getArrivalTime));
+
+        processes.forEach(process -> {
+            System.out.println("@t=" + clock + ", " + process.toString());
+            clock++;
         });
 
     }
