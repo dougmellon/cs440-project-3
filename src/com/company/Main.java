@@ -13,8 +13,6 @@ public class Main {
     static int clock = 0;
     static int contextSwitch = 1;
 
-    // static HashMap<Integer, Process> processes = new HashMap<>();
-
     static List<Process> processes = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -126,9 +124,18 @@ public class Main {
         for (int i = 0; i < processes.size(); i++) {
             System.out.println("@t=" + clock + ", " + processes.get(i).toString());
 
+            clock += processes.get(i).getBurstTime();
+
             if (i + 1 != processes.size()) {
                 System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+                clock += 2;
             }
         }
+
+        // SJF:
+
+
+        System.out.println("@t=" + clock + ", all processes complete");
+        System.out.println("Completed in " + clock + " cycles.");
     }
 }
