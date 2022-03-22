@@ -117,7 +117,6 @@ public class Main {
         });
 
         // fcfs
-        System.out.println("\nFCFS:");
 
         processes.sort(Comparator.comparing(Process::getArrivalTime));
 
@@ -132,10 +131,26 @@ public class Main {
             }
         }
 
-        // SJF:
-
-
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
+
+        // sjf
+        clock = 0;
+        contextSwitch = 1;
+
+        System.out.println("\nSJF:");
+
+        processes.sort(Comparator.comparing(Process::getBurstTime));
+
+        for (int i = 0; i < processes.size(); i++) {
+            System.out.println("@t=" + clock + ", " + processes.get(i).toString());
+
+            clock += processes.get(i).getBurstTime();
+
+            if (i + 1 != processes.size()) {
+                System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+                clock += 2;
+            }
+        }
     }
 }
