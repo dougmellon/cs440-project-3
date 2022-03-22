@@ -117,6 +117,7 @@ public class Main {
         });
 
         // ----------------- fcfs -----------------
+        System.out.println("\nFCFS:");
 
         processes.sort(Comparator.comparing(Process::getArrivalTime));
 
@@ -163,5 +164,8 @@ public class Main {
                 clock += 2;
             }
         }
+
+        System.out.println("@t=" + clock + ", all processes complete");
+        System.out.println("Completed in " + clock + " cycles.");
     }
 }
