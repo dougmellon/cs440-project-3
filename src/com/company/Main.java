@@ -144,6 +144,31 @@ public class Main {
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
 
+        // ----------------- RR -----------------
+        clock = 0;
+        contextSwitch = 1;
+
+        System.out.println("\nRR (q=" + quantum + ") :");
+
+
+        rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
+
+        int listSize = rrProcesses.size();
+
+
+        while (listSize > 0) {
+            for (Process process : rrProcesses) {
+                if (process.getBurstTime() < quantum && process.getBurstTime() != 0) {
+                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + process.getBurstTime() + " units");
+                    process.setBurstTime(0);
+                    listSize--;
+                } else if (process.getBurstTime() > quantum && process.getBurstTime() != 0) {
+                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + quantum + " units");
+                    process.setBurstTime(process.getBurstTime() - quantum);
+                }
+            }
+        }
+
         // ----------------- sjf -----------------
         clock = 0;
         contextSwitch = 1;
@@ -176,30 +201,6 @@ public class Main {
 
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
-
-        // ----------------- RR -----------------
-        clock = 0;
-        contextSwitch = 1;
-
-        System.out.println("\nRR (q=" + quantum + ") :");
-
-
-        rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
-
-        int listSize = rrProcesses.size();
-
-        while (listSize > 0) {
-            for (Process process : rrProcesses) {
-                if (process.getBurstTime() < quantum && process.getBurstTime() != 0) {
-                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + process.getBurstTime() + " units");
-                    process.setBurstTime(0);
-                    listSize--;
-                } else if (process.getBurstTime() > quantum && process.getBurstTime() != 0) {
-                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + quantum + " units");
-                    process.setBurstTime(process.getBurstTime() - quantum);
-                }
-            }
-        }
 
         // ----------------- random -----------------
         clock = 0;
