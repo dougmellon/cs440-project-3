@@ -212,43 +212,24 @@ public class Main {
 
         System.out.println("\nRR (q=" + quantum + ") :");
 
-        // create a dictionary of for remaining burst times
-//        HashMap<Integer, Integer> remainingBurst = new HashMap<>();
         List<Process> rrProcesses = processes;
 
         rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
 
-        while (rrProcesses.size() > 0) {
-            for (Process process : rrProcesses) {
-                if (process.getBurstTime() <= quantum) {
-                    System.out.println("@t=" + clock + ", selected for " + process.getBurstTime() + " units");
-                    clock += process.getBurstTime();
-                    rrProcesses.remove(process);
-                }
-            }
-        }
+        int processCounter = 1;
 
+        Iterator<Process> iter = rrProcesses.iterator();
 
-
-//        for (Process process : rrProcesses) {
-//            remainingBurst.put(process.id, process.burstTime);
-//        }
-//
-//
-//
-//        int processCounter = 1;
-//
-//        while (remainingBurst.size() > 0) {
-//
-//            for (Map.Entry<Integer, Integer> entry : remainingBurst.entrySet()) {
-//                if (entry.getValue() <= quantum && entry.getValue() > 0) {
-//                    System.out.println("@t=" + clock + ", selected for " + entry.getValue() + " units");
-//                    clock += entry.getValue();
-//                    remainingBurst.remove(entry.getKey());
+//        while (iter.hasNext()) {
+//            for (Process process : rrProcesses) {
+//                if (process.getBurstTime() <= quantum) {
+//                    System.out.println("@t=" + clock + ", selected for " + process.getBurstTime() + " units");
+//                    clock += process.getBurstTime();
+//                    iter.remove();
 //                } else {
 //                    System.out.println("@t=" + clock + ", selected for " + quantum + " units");
 //                    clock += quantum;
-//                    entry.setValue(entry.getValue() - quantum);
+//                    process.setBurstTime(process.burstTime - quantum);
 //                }
 //
 //                if (processCounter != rrProcesses.size()) {
@@ -257,8 +238,25 @@ public class Main {
 //                    clock += latency;
 //                }
 //            }
-//
 //        }
 
+        while (iter.hasNext()) {
+            Process process = iter.next();
+            if (process.getBurstTime() <= quantum) {
+                System.out.println("@t=" + clock + ", selected for " + process.getBurstTime() + " units");
+                clock += process.getBurstTime();
+                iter.remove();
+            } else {
+                System.out.println("@t=" + clock + ", selected for " + quantum + " units");
+                clock += quantum;
+                process.setBurstTime(process.burstTime - quantum);
+            }
+
+            if (processCounter != rrProcesses.size()) {
+                System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+                contextSwitch++;
+                clock += latency;
+            }
+        }
     }
 }
