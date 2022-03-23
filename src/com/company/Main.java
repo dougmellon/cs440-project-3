@@ -130,7 +130,7 @@ public class Main {
         fcfsProcesses.sort(Comparator.comparing(Process::getArrivalTime));
 
         for (int i = 0; i < fcfsProcesses.size(); i++) {
-            System.out.println("@t=" + clock + ", " + "P" + fcfsProcesses.get(i).getId() + ", selected for " + fcfsProcesses.get(i).getBurstTime() + "units");
+            System.out.println("@t=" + clock + ", " + "P" + fcfsProcesses.get(i).getId() + ", selected for " + fcfsProcesses.get(i).getBurstTime() + " units");
 
             clock += fcfsProcesses.get(i).getBurstTime();
 
@@ -152,7 +152,7 @@ public class Main {
 
         // print out the first process then remove it
         sjfProcesses.sort(Comparator.comparing(Process::getArrivalTime));
-        System.out.println("@t=" + clock + ", " + "P" + sjfProcesses.get(0).getId() + ", selected for " + sjfProcesses.get(0).getBurstTime() + "units");
+        System.out.println("@t=" + clock + ", " + "P" + sjfProcesses.get(0).getId() + ", selected for " + sjfProcesses.get(0).getBurstTime() + " units");
         clock += sjfProcesses.get(0).getBurstTime();
         System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
         clock += latency;
@@ -163,7 +163,7 @@ public class Main {
         sjfProcesses.sort(Comparator.comparing(Process::getBurstTime));
 
         for (int i = 0; i < sjfProcesses.size(); i++) {
-            System.out.println("@t=" + clock + ", " + "P" + sjfProcesses.get(i).getId() + ", selected for " + sjfProcesses.get(i).getBurstTime() + "units");
+            System.out.println("@t=" + clock + ", " + "P" + sjfProcesses.get(i).getId() + ", selected for " + sjfProcesses.get(i).getBurstTime() + " units");
 
             clock += sjfProcesses.get(i).getBurstTime();
 
