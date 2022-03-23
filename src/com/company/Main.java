@@ -202,5 +202,26 @@ public class Main {
 
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
+
+        // ----------------- RR -----------------
+        clock = 0;
+        contextSwitch = 1;
+
+        System.out.println("\nRR (q=" + quantum + ") :");
+
+        // create a dictionary of for remaining burst times
+        HashMap<Integer, Integer> remainingBurst = new HashMap<>();
+        List<Process> rrProcesses = processes;
+
+        rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
+
+        for (Process process : rrProcesses) {
+            remainingBurst.put(process.id, process.burstTime);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : remainingBurst.entrySet()) {
+
+        }
+
     }
 }
