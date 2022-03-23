@@ -140,7 +140,8 @@ public class Main {
 
             if (i + 1 != randProcesses.size()) {
                 System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-                clock += 2;
+                contextSwitch++;
+                clock += latency;
             }
         }
 
@@ -163,7 +164,8 @@ public class Main {
 
             if (i + 1 != processes.size()) {
                 System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-                clock += 2;
+                contextSwitch++;
+                clock += latency;
             }
         }
 
@@ -196,7 +198,8 @@ public class Main {
 
             if (i + 1 != sjfProcesses.size()) {
                 System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-                clock += 2;
+                contextSwitch++;
+                clock += latency;
             }
         }
 
@@ -219,7 +222,27 @@ public class Main {
             remainingBurst.put(process.id, process.burstTime);
         }
 
-        for (Map.Entry<Integer, Integer> entry : remainingBurst.entrySet()) {
+        int processCounter = 1;
+
+        while (remainingBurst.size() > 0) {
+
+            for (Map.Entry<Integer, Integer> entry : remainingBurst.entrySet()) {
+                if (entry.getValue() <= quantum && entry.getValue() > 0) {
+                    System.out.println("@t=" + clock + ", selected for " + entry.getValue() + " units");
+                    clock += entry.getValue();
+                    remainingBurst.remove(entry.getKey());
+                } else {
+                    System.out.println("@t=" + clock + ", selected for " + quantum + " units");
+                    clock += quantum;
+                    entry.setValue(entry.getValue() - quantum);
+                }
+
+                if (processCounter != rrProcesses.size()) {
+                    System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+                    contextSwitch++;
+                    clock += latency;
+                }
+            }
 
         }
 
