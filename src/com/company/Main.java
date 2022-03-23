@@ -144,45 +144,11 @@ public class Main {
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
 
-        // ----------------- RR -----------------
-        clock = 0;
-        contextSwitch = 1;
-
-        System.out.println("\nRR (q=" + quantum + ") :");
-
-
-        rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
-
-        int listSize = rrProcesses.size();
-
-
-        while (listSize > 0) {
-            for (Process process : rrProcesses) {
-                if (process.getBurstTime() < quantum && process.getBurstTime() != 0) {
-                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + process.getBurstTime() + " units");
-                    process.setBurstTime(0);
-                    listSize--;
-                } else if (process.getBurstTime() > quantum && process.getBurstTime() != 0) {
-                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + quantum + " units");
-                    process.setBurstTime(process.getBurstTime() - quantum);
-                }
-            }
-        }
-
         // ----------------- sjf -----------------
         clock = 0;
         contextSwitch = 1;
 
         System.out.println("\nSJF:");
-
-        // print out the first process then remove it
-        sjfProcesses.sort(Comparator.comparing(Process::getArrivalTime));
-        System.out.println("@t=" + clock + ", " + "P" + sjfProcesses.get(0).getId() + ", selected for " + sjfProcesses.get(0).getBurstTime() + " units");
-        clock += sjfProcesses.get(0).getBurstTime();
-        System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-        clock += latency;
-        contextSwitch++;
-        randProcesses.remove(0);
 
         // sort the rest by their burst time
         sjfProcesses.sort(Comparator.comparing(Process::getBurstTime));
@@ -209,12 +175,6 @@ public class Main {
         System.out.println("\nRandom:");
 
         randProcesses.sort(Comparator.comparing(Process::getArrivalTime));
-        System.out.println("@t=" + clock + ", " + "P" + randProcesses.get(0).getId() + ", selected for " + randProcesses.get(0).getBurstTime() + "units");
-        clock += randProcesses.get(0).getBurstTime();
-        System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
-        contextSwitch++;
-        clock += latency;
-        randProcesses.remove(0);
 
         Collections.shuffle(randProcesses, new Random(seed)); // randomly shuffle the list of processes
 
@@ -232,5 +192,30 @@ public class Main {
 
         System.out.println("@t=" + clock + ", all processes complete");
         System.out.println("Completed in " + clock + " cycles.");
+
+        // ----------------- RR -----------------
+        clock = 0;
+        contextSwitch = 1;
+
+        System.out.println("\nRR (q=" + quantum + ") :");
+
+
+        rrProcesses.sort(Comparator.comparing(Process::getId)); // sort the processes by id
+
+        int listSize = rrProcesses.size();
+
+
+        while (listSize > 0) {
+            for (Process process : rrProcesses) {
+                if (process.getBurstTime() < quantum && process.getBurstTime() != 0) {
+                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + process.getBurstTime() + " units");
+                    process.setBurstTime(0);
+                    listSize--;
+                } else if (process.getBurstTime() > quantum && process.getBurstTime() != 0) {
+                    System.out.println("@t=" + ", P" + process.getId() + " selected for " + quantum + " units");
+                    process.setBurstTime(process.getBurstTime() - quantum);
+                }
+            }
+        }
     }
 }
