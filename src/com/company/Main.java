@@ -116,7 +116,42 @@ public class Main {
                     process.getBurstTime());
         });
 
+        // ----------------- random -----------------
+        clock = 0;
+        contextSwitch = 1;
+
+        System.out.println("\nRandom:");
+
+        List<Process> randProcesses = processes;
+
+        randProcesses.sort(Comparator.comparing(Process::getArrivalTime));
+        System.out.println("@t=" + clock + ", " + randProcesses.get(0).toString());
+        clock += randProcesses.get(0).getBurstTime();
+        System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+        clock += 2;
+        randProcesses.remove(0);
+
+        Collections.shuffle(randProcesses, new Random(seed)); // randomly shuffle the list of processes
+
+        for (int i = 0; i < randProcesses.size(); i++) {
+            System.out.println("@t=" + clock + ", " + randProcesses.get(i).toString());
+
+            clock += randProcesses.get(i).getBurstTime();
+
+            if (i + 1 != randProcesses.size()) {
+                System.out.println("@t=" + clock + ", context switch " + contextSwitch + " occurs");
+                clock += 2;
+            }
+        }
+
+        System.out.println("@t=" + clock + ", all processes complete");
+        System.out.println("Completed in " + clock + " cycles.");
+
+
         // ----------------- fcfs -----------------
+        clock = 0;
+        contextSwitch = 1;
+
         System.out.println("\nFCFS:");
 
         processes.sort(Comparator.comparing(Process::getArrivalTime));
