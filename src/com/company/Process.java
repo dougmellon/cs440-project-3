@@ -57,9 +57,4 @@ public class Process {
     public void setQuantum(int quantum) {
         this.quantum = quantum;
     }
-
-
-    public String toString() {
-        return "P" + this.id + " selected for " + this.burstTime + " units";
-    }
 }
