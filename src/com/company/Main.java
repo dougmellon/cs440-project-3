@@ -81,7 +81,7 @@ public class Main {
                 System.out.print("Enter latency (0, 10): ");
             }
 
-        } while (latency < 1 || latency > 10);
+        } while (latency < 0 || latency > 10);
 
         // create processes and add them to a hashmap
         for (int i = 1; i < numProcesses + 1; i++) {
@@ -179,7 +179,7 @@ public class Main {
         Collections.shuffle(randProcesses, new Random(seed)); // randomly shuffle the list of processes
 
         for (int i = 0; i < randProcesses.size(); i++) {
-            System.out.println("@t=" + clock + ", " + "P" + randProcesses.get(i).getId() + ", selected for " + randProcesses.get(i).getBurstTime() + "units");
+            System.out.println("@t=" + clock + ", " + "P" + randProcesses.get(i).getId() + ", selected for " + randProcesses.get(i).getBurstTime() + " units");
 
             clock += randProcesses.get(i).getBurstTime();
 
